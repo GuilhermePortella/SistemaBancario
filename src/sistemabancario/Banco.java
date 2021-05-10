@@ -5,6 +5,8 @@
  */
 package sistemabancario;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Guilherme
@@ -12,19 +14,30 @@ package sistemabancario;
 public class Banco {
 
     public static void main(String[] args) {
+        
+        ArrayList<Correntista> listaDeClientes = new ArrayList<Correntista>();
+        
 
-        Correntista objCorrentista1 = new Correntista("João");
-        Correntista objCorrentista2 = new Correntista("Bruna");
-        Correntista objCorrentista3 = new Correntista("Kelly");
-        Correntista objCorrentista4 = new Correntista("Ana");
+        CorrentistaFisico objCorrentista1 = new CorrentistaFisico("João");
+        listaDeClientes.add(objCorrentista1);
         
-        System.out.println(objCorrentista1.getCodigo() + " - " + objCorrentista1.getNome());
-        System.out.println(objCorrentista2.getCodigo() + " - " + objCorrentista2.getNome());
-        System.out.println(objCorrentista3.getCodigo() + " - " + objCorrentista3.getNome());
-        System.out.println(objCorrentista4.getCodigo() + " - " + objCorrentista4.getNome());
-    
+        CorrentistaFisico objCorrentista2 = new CorrentistaFisico("Luiz");
+        listaDeClientes.add(objCorrentista2);
         
-        Correntista.imprimirSaudacao();
-    
+        CorrentistaFisico objCorrentista3 = new CorrentistaFisico("Kelly");
+        listaDeClientes.add(objCorrentista3);
+        
+        CorrentistaFisico objCorrentista4 = new CorrentistaFisico("Ana");
+        listaDeClientes.add(objCorrentista4);
+        
+        CorrentistaJuridico objCorrentista5 = new CorrentistaJuridico("Lenovo", "Carlos");
+        listaDeClientes.add(objCorrentista5);
+        
+        
+        objCorrentista1.exibeIdentificacao();
+        objCorrentista2.exibeIdentificacao();
+        objCorrentista3.exibeIdentificacao();
+        objCorrentista4.exibeIdentificacao();
+        objCorrentista5.exibeIdentificacao();
     }
 }
