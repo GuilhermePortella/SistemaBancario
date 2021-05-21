@@ -13,13 +13,8 @@ public class CorrentistaJuridico extends Correntista{
 
     private String nomeResponsavel;
 
-    public CorrentistaJuridico(String nome) {
-        super(nome);
-        this.nomeResponsavel = "";
-    }
-
-    public CorrentistaJuridico(String nomeResponsavel, String nome) {
-        super(nome);
+    public CorrentistaJuridico(String nomeResponsavel, String nome, ContaJuridica conta) {
+        super(nome, conta);
         this.nomeResponsavel = nomeResponsavel;
     }
     

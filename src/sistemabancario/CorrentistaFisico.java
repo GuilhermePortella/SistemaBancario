@@ -9,13 +9,14 @@ package sistemabancario;
  *
  * @author Guilherme
  */
-public class CorrentistaFisico extends Correntista{
+class CorrentistaFisico extends Correntista{
     
-    public CorrentistaFisico(String nome) {
-        super(nome);
+    public CorrentistaFisico(String nome, ContaFisica conta) {
+        super(nome, conta);
     }
-    
-    public void exibiIdentificacao(){
+
+    @Override
+    public void exibeIdentificacao() {
         System.out.println("Eu sou correntista fisico: " + getCodigo() + " - " + getNome());
     }
     

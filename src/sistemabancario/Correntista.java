@@ -9,12 +9,14 @@ package sistemabancario;
  *
  * @author Guilherme
  */
-public class Correntista {
+abstract class Correntista {
 
     private int codigo;
     private String nome;
 
     private static int proxCodigo = 1;
+    
+    private Conta conta;
 
     public Correntista() {
         this.codigo = Correntista.getProxCodigo();
@@ -22,10 +24,12 @@ public class Correntista {
 
     }
 
-    public Correntista(String nome) {
+    public Correntista(String nome, Conta conta) {
         this.codigo = getProxCodigo();
         
         this.nome = nome;
+        
+        this.conta = conta;
     }
 
     public int getCodigo() {
@@ -43,8 +47,13 @@ public class Correntista {
     public static int getProxCodigo() {
         return Correntista.proxCodigo++;
     }
-    
-    public void exibeIdentificacao(){
-        System.out.println("Eu sou correntista: " + getCodigo() + " - " + getNome());
+
+    public Conta getConta() {
+        return conta;
     }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
+    }    
+    public abstract void exibeIdentificacao();
 }
