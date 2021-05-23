@@ -20,4 +20,6 @@ class CorrentistaFisico extends Correntista{
         System.out.println("Eu sou correntista fisico: " + getCodigo() + " - " + getNome());
     }
     
+    
+    
 }
