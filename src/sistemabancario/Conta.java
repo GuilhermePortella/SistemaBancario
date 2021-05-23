@@ -16,4 +16,7 @@ public interface Conta {
     public void deposito(double valor);
     
     public void saque(double valor);
+    
+    //CF = CAPITAL FINANCIADO, N = MESES
+    public double simulaEmprestimo(double cf, int n);
 }
