@@ -5,11 +5,13 @@
  */
 package sistemabancario;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Guilherme
  */
-abstract class Correntista {
+abstract class Correntista implements Serializable{
 
     private int codigo;
     private String nome;

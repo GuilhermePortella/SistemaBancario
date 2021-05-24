@@ -5,11 +5,13 @@
  */
 package sistemabancario;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Guilherme
  */
-public interface Conta {
+public interface Conta extends Serializable{
     
     public void extrato();
     

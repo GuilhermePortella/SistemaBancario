@@ -7,7 +7,16 @@ package sistemabancario;
 
 import java.util.ArrayList;
 import GraphicInterface.Initial;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import jdk.internal.dynalink.support.BottomGuardingDynamicLinker;
+import java.io.ObjectInputStream;
+import java.util.Collection;
 
 /**
  *
@@ -15,39 +24,78 @@ import jdk.internal.dynalink.support.BottomGuardingDynamicLinker;
  */
 public class Banco {
 
-    public static void main(String[] args) {
-        
-        ArrayList<Correntista> listaDeClientes = new ArrayList<Correntista>();
-        
+    private ArrayList<Correntista> listaClientes;
 
-        CorrentistaFisico objCorrentista1 = new CorrentistaFisico("João", new ContaFisica());
-        listaDeClientes.add(objCorrentista1);
-        
-        CorrentistaFisico objCorrentista2 = new CorrentistaFisico("Luiz", new ContaFisica());
-        listaDeClientes.add(objCorrentista2);
-        
-        CorrentistaFisico objCorrentista3 = new CorrentistaFisico("Kelly", new ContaFisica());
-        listaDeClientes.add(objCorrentista3);
-        
-        CorrentistaFisico objCorrentista4 = new CorrentistaFisico("Ana", new ContaFisica());
-        listaDeClientes.add(objCorrentista4);
-        
-        CorrentistaJuridico objCorrentista5 = new CorrentistaJuridico("Lenovo", "Carlos", new ContaJuridica());
-        listaDeClientes.add(objCorrentista5);
-        
-        
-        objCorrentista1.exibeIdentificacao();
-        objCorrentista2.exibeIdentificacao();
-        objCorrentista3.exibeIdentificacao();
-        objCorrentista4.exibeIdentificacao();
-        objCorrentista5.exibeIdentificacao();
-        //CorrentistaJuridico.exibeIdentificacao();
-        
-        try{
-            System.out.println(objCorrentista5.getConta().simulaEmprestimo(5000.0, -12));
+    public Banco() {
+        this.listaClientes = new ArrayList<Correntista>();
+    }
+
+    public void addCliente(Correntista c) {
+        listaClientes.add(c);
+    }
+
+    public void removeCliente(Correntista c) {
+        listaClientes.remove(c);
+    }
+
+    public void removeTodosClientes() {
+        listaClientes.clear();
+    }
+
+    public Collection<Correntista> getListaClientes() {
+        return listaClientes;
+    }
+
+    public void setListaClientes(Collection<Correntista> c) {
+        this.listaClientes = new ArrayList<>(c);
+    }
+
+    public void salvaClientela() throws IOException {
+        FileOutputStream fos = new FileOutputStream(new File("clientes.dat"), false);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        for (Correntista c : listaClientes) {
+            oos.writeObject(c); // Persiste cliente no arquivo clientes.dat
         }
-        catch(IndexOutOfBoundsException e){
-            System.out.println("Argumento invalido");
+
+        oos.close();
+    }
+
+    public void leClientela() throws IOException, ClassNotFoundException {
+        this.removeTodosClientes(); // Zera a lista
+
+        FileInputStream fis = new FileInputStream(new File("clientes.dat"));
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
+        Object obj = null;
+        try { //Lê objetos um a um
+            while ((obj = ois.readObject()) != null) {
+                this.addCliente((Correntista) obj); // Typecasting
+            }
+        } catch (EOFException e) {
+        } finally {
+            ois.close(); // Fecha o arquivo
         }
     }
+
+    public static void main(String[] args) {
+        Banco banco = new Banco();
+
+        ContaFisica conta = new ContaFisica();
+        conta.deposito(1000.0); // Valor depositado: 1000.0
+
+        CorrentistaFisico cJoao = new CorrentistaFisico("João", conta);
+        CorrentistaFisico cMaria = new CorrentistaFisico("Maria", conta);
+
+        banco.addCliente(cJoao);
+        banco.addCliente(cMaria);
+
+        SaqueATM s1 = new SaqueATM(cJoao.getConta(), 1000.0);
+        SaqueATM s2 = new SaqueATM(cMaria.getConta(), 1000.0);
+
+        s1.start();
+
+        s2.start();
+    }
+
 }
