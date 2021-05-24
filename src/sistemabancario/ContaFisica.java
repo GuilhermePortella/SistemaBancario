@@ -21,8 +21,8 @@ public class ContaFisica implements Conta {
     }
 
     public void deposito(double valor) {
-        saldo = saldo + valor;
-        //saldo += valor;
+        //saldo = saldo + valor;
+        saldo += valor;
         System.out.println("Valor depositado: " + valor);
     }
 
